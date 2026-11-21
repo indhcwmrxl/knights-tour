@@ -32,7 +32,7 @@ O algoritmo inicializa uma matriz N×N e executa no maximo N² − 1 passos por 
 
 - Heuristica de Warnsdorff com criterio de desempate de Roth
 - Visualizacao animada passo a passo no terminal
-- Dois modos de renderizacao: **perspectiva 3D** e **projecao isometrica**
+- Renderizacao em perspectiva 3D no terminal
 - Suporte a cores ANSI com estetica cyberpunk/retro
 - Tamanho do tabuleiro, posicao inicial, velocidade de animacao e altura das celulas configuravéis
 - Relatorio de execucao com numero de passos, tempo e total de avaliacoes de grau
@@ -70,7 +70,7 @@ Executa com a configuracao padrao: tabuleiro 8×8, posicao inicial A1, modo de v
 ### Sintaxe completa
 
 ```bash
-python3 knights_tour.py [--size N] [--start POS] [--delay SEG] [--view MODO] [--tall | --compact]
+python3 knights_tour.py [--size N] [--start POS] [--delay SEG] [--tall | --compact]
 ```
 
 ### Opcoes
@@ -80,15 +80,14 @@ python3 knights_tour.py [--size N] [--start POS] [--delay SEG] [--view MODO] [--
 | `--size N` | `-s` | `8` | Tamanho do tabuleiro (N×N). Minimo recomendado: 5 |
 | `--start POS` | `-p` | `a1` | Posicao inicial em notacao de xadrez (ex: `d4`, `b7`) |
 | `--delay SEG` | `-d` | `0.06` | Intervalo entre quadros da animacao em segundos |
-| `--view MODO` | `-v` | `3d` | Modo de renderizacao: `3d` ou `iso` |
 | `--tall` | | | Forca altura de celula com 3 linhas |
 | `--compact` | | | Forca altura de celula com 2 linhas |
 
 ### Exemplos
 
 ```bash
-# Tabuleiro 8x8 iniciando em D4 com visao isometrica
-python3 knights_tour.py --start d4 --view iso
+# Tabuleiro 8x8 iniciando em D4
+python3 knights_tour.py --start d4
 
 # Tabuleiro 5x5 iniciando em A3, animacao mais rapida
 python3 knights_tour.py --size 5 --start a3 --delay 0.03
@@ -97,7 +96,7 @@ python3 knights_tour.py --size 5 --start a3 --delay 0.03
 python3 knights_tour.py --size 10 --compact
 
 # Argumentos posicionais (sintaxe legada)
-python3 knights_tour.py 8 0.05 d4 3d
+python3 knights_tour.py 8 0.05 d4
 ```
 
 ---

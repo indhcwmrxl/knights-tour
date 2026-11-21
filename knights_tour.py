@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- O PROBLEMA DO CAVALO (KNIGHT'S TOUR) - VISUALIZADOR 3D / ISOMÉTRICO (ASCII)
+ O PROBLEMA DO CAVALO (KNIGHT'S TOUR) - VISUALIZADOR 3D (ASCII)
 =============================================================================
  Demonstração interativa e animada do clássico algoritmo do Passeio do Cavalo
  utilizando a Heurística de Warnsdorff com desempate de Roth e renderização
- 3D / Isométrica em terminal com estética cyberpunk/retro.
+ 3D em perspectiva no terminal com estética cyberpunk/retro.
 =============================================================================
 """
 
@@ -46,10 +46,9 @@ C_END_FG      = "\033[1;38;5;196m"  # Vermelho Neon brilhante para FIM
 C_END_BG      = "\033[48;5;52m"     # Fundo vermelho vinho para destacar a casa final
 
 class KnightsTour3D:
-    def __init__(self, size=8, delay=0.06, start_pos="a1", view="3d", cell_height=None):
+    def __init__(self, size=8, delay=0.06, start_pos="a1", cell_height=None):
         self.size = size
         self.delay = delay
-        self.view = view.lower()
         self.board = [[0 for _ in range(size)] for _ in range(size)]
         self.moves = [
             (-2, -1), (-2, 1), (-1, -2), (-1, 2),
@@ -315,164 +314,7 @@ class KnightsTour3D:
 
         return "\n".join(lines)
 
-    # =========================================================================
-    # RENDERIZADOR 2: TABULEIRO ISOMÉTRICO 3D (CORRIGIDO E ROTACIONADO)
-    # =========================================================================
-    def render_isometric_3d(self, current_step):
-        """
-        Renderiza projeção isométrica em diamante 3D corrigida:
-        - A1 posicionado na parte frontal/inferior (mais próxima do observador).
-        - Fileira 1 na borda frontal-direita, Coluna A na borda frontal-esquerda.
-        - Coordenadas de xadrez nas bordas.
-        - Paredes 3D alinhadas na base sem sobrepor as casas internas.
-        - Sprite do cavalo estruturado em 3D.
-        """
-        offset_x = (self.size - 1) * 4 + 8
-        offset_y = 3
-        depth_3d = 2
-        width = offset_x * 2 + 14
-        height = (self.size * 2) * 2 + 7
-
-        canvas = [[" " for _ in range(width)] for _ in range(height)]
-        color_map = [["" for _ in range(width)] for _ in range(height)]
-
-        def put(x, y, char, color=""):
-            if 0 <= y < height and 0 <= x < width:
-                canvas[y][x] = char
-                if color:
-                    color_map[y][x] = color
-
-        def tile_to_screen_iso(r, c):
-            # r: 0 (rank 8) a 7 (rank 1)
-            # rank_idx: 0 (rank 1) a 7 (rank 8)
-            rank_idx = self.size - 1 - r
-            file_idx = c
-            sx = (file_idx - rank_idx) * 4 + offset_x
-            sy = (self.size * 2 - 2 - (rank_idx + file_idx)) * 2 + offset_y
-            return sx, sy
-
-        col_letters = "ABCDEFGH"
-
-        # 1. Desenha malha isométrica superior
-        for r in range(self.size):
-            for c in range(self.size):
-                cx, cy = tile_to_screen_iso(r, c)
-                val = self.board[r][c]
-                total_squares = self.size * self.size
-                is_start = (val == 1)
-                # O ponto de término só é revelado no fim quando o percurso termina
-                is_end = (val == total_squares and current_step >= total_squares)
-
-                # Cor das bordas do losango destacada para início e fim
-                border_col = C_START_FG if is_start else (C_END_FG if is_end else C_BORDER)
-
-                # Vértices do losango
-                put(cx,     cy - 2, "+", border_col)
-                put(cx - 2, cy - 1, "/", border_col)
-                put(cx + 2, cy - 1, "\\", border_col)
-                put(cx - 4, cy,     "+", border_col)
-                put(cx + 4, cy,     "+", border_col)
-                put(cx - 2, cy + 1, "\\", border_col)
-                put(cx + 2, cy + 1, "/", border_col)
-                put(cx,     cy + 2, "+", border_col)
-
-                is_light = (r + c) % 2 == 0
-                bg_char = "·" if is_light else " "
-                tile_bg = C_START_BG if is_start else (C_END_BG if is_end else (C_TILE_L if is_light else C_TILE_D))
-                put(cx, cy, bg_char, tile_bg)
-
-                is_current = (current_step > 0 and len(self.path) >= current_step and 
-                              self.path[current_step - 1] == (r, c))
-                is_visited = 0 < val <= current_step
-
-                if is_current:
-                    base_iso = C_START_FG if is_start else (C_END_FG if is_end else C_KNIGHT_BASE)
-                    # Sprite do Cavalo no Diamante Isométrico
-                    put(cx - 1, cy - 1, "_", C_KNIGHT)
-                    put(cx,     cy - 1, "/", C_KNIGHT)
-                    put(cx + 1, cy - 1, ")", C_KNIGHT)
-
-                    put(cx - 2, cy,     "/", C_KNIGHT)
-                    put(cx - 1, cy,     "●", C_KNIGHT_EYE)
-                    put(cx + 1, cy,     "\\", C_KNIGHT)
-
-                    s_val = f"{val:02d}"
-                    put(cx - 2, cy + 1, "[", base_iso)
-                    put(cx - 1, cy + 1, s_val[0], C_KNIGHT_EYE + C_BOLD)
-                    put(cx,     cy + 1, s_val[1], C_KNIGHT_EYE + C_BOLD)
-                    put(cx + 1, cy + 1, "]", base_iso)
-
-                elif is_start and is_visited:
-                    put(cx - 2, cy, "[", C_START_FG)
-                    put(cx - 1, cy, "0", C_START_FG + C_BOLD)
-                    put(cx,     cy, "1", C_START_FG + C_BOLD)
-                    put(cx + 1, cy, "]", C_START_FG)
-
-                elif is_end:
-                    s_end = f"{total_squares:02d}"
-                    put(cx - 2, cy, "[", C_END_FG)
-                    put(cx - 1, cy, s_end[0], C_END_FG + C_BOLD)
-                    put(cx,     cy, s_end[1], C_END_FG + C_BOLD)
-                    put(cx + 1, cy, "]", C_END_FG)
-
-                elif is_visited:
-                    diff = current_step - val
-                    col = C_TRAIL_HOT if diff <= 1 else (C_TRAIL_MID if diff <= 4 else C_VISITED)
-                    s_val = f"{val:02d}"
-                    put(cx - 1, cy, s_val[0], col + C_BOLD)
-                    put(cx,     cy, s_val[1], col + C_BOLD)
-
-        # 2. Coordenadas de Xadrez nas bordas
-        for r in range(self.size):
-            rank = self.size - r
-            cx, cy = tile_to_screen_iso(r, 0)
-            put(cx - 6, cy, str(rank), C_COORD)
-
-        for c in range(self.size):
-            char_c = col_letters[c] if c < len(col_letters) else chr(ord('A') + c)
-            cx, cy = tile_to_screen_iso(self.size - 1, c)
-            put(cx + 3, cy + 2, char_c, C_COORD)
-
-        # 3. Pedestal frontal (sem sobrepor casas internas)
-        # Borda frontal esquerda: coluna A (c = 0)
-        c = 0
-        for r in range(self.size):
-            cx, cy = tile_to_screen_iso(r, c)
-            for h_wall in range(1, depth_3d + 1):
-                put(cx - 4, cy + h_wall, "|", C_WALL)
-                put(cx - 3, cy + 1 + h_wall, "▒", C_WALL_F)
-                put(cx - 2, cy + 1 + h_wall, "\\", C_WALL)
-
-        # Borda frontal direita: linha 1 (r = size - 1)
-        r = self.size - 1
-        for c in range(self.size):
-            cx, cy = tile_to_screen_iso(r, c)
-            for h_wall in range(1, depth_3d + 1):
-                put(cx,     cy + 2 + h_wall, "|", C_WALL)
-                put(cx + 1, cy + 1 + h_wall, "░", C_WALL_F)
-                put(cx + 2, cy + 1 + h_wall, "/", C_WALL)
-                put(cx + 4, cy + h_wall,     "|", C_WALL)
-
-        lines = []
-        for y in range(height):
-            line_str = ""
-            current_col = ""
-            for x in range(width):
-                char = canvas[y][x]
-                color = color_map[y][x]
-                if color != current_col:
-                    line_str += (C_RESET + color) if color else C_RESET
-                    current_col = color
-                line_str += char
-            if current_col:
-                line_str += C_RESET
-            lines.append(line_str)
-
-        return "\n".join(lines)
-
     def render_frame(self, current_step):
-        if self.view in ["iso", "isometric", "isometria"]:
-            return self.render_isometric_3d(current_step)
         return self.render_perspective_3d(current_step)
 
     def print_hud(self, step, total_steps):
@@ -541,16 +383,14 @@ class KnightsTour3D:
 def parse_args():
     parser = argparse.ArgumentParser(description="Passeio do Cavalo (Knight's Tour) - Visualizador 3D ASCII")
     parser.add_argument("pos_size", nargs="?", default=None, help="Tamanho do tabuleiro (ex: 8 ou 5)")
-    parser.add_argument("pos_delay", nargs="?", default=None, help="Velocidade da animação em segundos (ex: 0.05)")
-    parser.add_argument("pos_start", nargs="?", default=None, help="Posição inicial (ex: a1, b1, d4)")
-    parser.add_argument("pos_view", nargs="?", default=None, help="Modo de visão: 3d ou iso")
-    
-    parser.add_argument("--size", "-s", type=int, default=8, help="Tamanho do tabuleiro (padrão: 8)")
-    parser.add_argument("--delay", "-d", type=float, default=0.06, help="Intervalo entre passos (padrão: 0.06s)")
-    parser.add_argument("--start", "-p", type=str, default="a1", help="Posição inicial do cavalo (padrão: a1)")
-    parser.add_argument("--view", "-v", type=str, default="3d", choices=["3d", "iso", "isometric"], help="Modo de visualização (3d ou iso)")
-    parser.add_argument("--tall", action="store_true", help="Força células altas com 3 linhas")
-    parser.add_argument("--compact", action="store_true", help="Força células compactas com 2 linhas")
+    parser.add_argument("pos_delay", nargs="?", default=None, help="Velocidade da animacao em segundos (ex: 0.05)")
+    parser.add_argument("pos_start", nargs="?", default=None, help="Posicao inicial (ex: a1, b1, d4)")
+
+    parser.add_argument("--size", "-s", type=int, default=8, help="Tamanho do tabuleiro (padrao: 8)")
+    parser.add_argument("--delay", "-d", type=float, default=0.06, help="Intervalo entre passos (padrao: 0.06s)")
+    parser.add_argument("--start", "-p", type=str, default="a1", help="Posicao inicial do cavalo (padrao: a1)")
+    parser.add_argument("--tall", action="store_true", help="Forca celulas altas com 3 linhas")
+    parser.add_argument("--compact", action="store_true", help="Forca celulas compactas com 2 linhas")
 
     args = parser.parse_args()
 
@@ -570,7 +410,6 @@ def parse_args():
             pass
 
     start = args.pos_start if args.pos_start is not None else args.start
-    view = args.pos_view if args.pos_view is not None else args.view
 
     cell_height = None
     if args.tall:
@@ -578,10 +417,10 @@ def parse_args():
     elif args.compact:
         cell_height = 2
 
-    return size, delay, start, view, cell_height
+    return size, delay, start, cell_height
 
 
 if __name__ == "__main__":
-    size, delay, start, view, cell_height = parse_args()
-    app = KnightsTour3D(size=size, delay=delay, start_pos=start, view=view, cell_height=cell_height)
+    size, delay, start, cell_height = parse_args()
+    app = KnightsTour3D(size=size, delay=delay, start_pos=start, cell_height=cell_height)
     app.animate()
