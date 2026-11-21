@@ -1,5 +1,9 @@
 # Passeio do Cavalo — Heuristica de Warnsdorff com Criterio de Desempate de Roth
 
+<p align="center">
+  <img src="banner.jpg" alt="Passeio do Cavalo" width="320"/>
+</p>
+
 Implementacao em terminal do classico **Problema do Passeio do Cavalo** utilizando uma estrategia gulosa baseada na **heuristica de Warnsdorff** com o **criterio de desempate de Roth**, com visualizacao animada do tabuleiro em ASCII renderizado em perspectiva 3D ou projecao isometrica.
 
 ---
