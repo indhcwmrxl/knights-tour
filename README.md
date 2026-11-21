@@ -1,54 +1,54 @@
-# Knight's Tour — Warnsdorff's Heuristic with Roth's Tiebreaker
+# Passeio do Cavalo — Heuristica de Warnsdorff com Criterio de Desempate de Roth
 
-A terminal-based implementation of the **Knight's Tour problem** using a greedy strategy based on **Warnsdorff's heuristic** with **Roth's tiebreaking criterion**, featuring an animated ASCII board rendered in 3D perspective or isometric projection.
-
----
-
-## About the Problem
-
-The Knight's Tour is a classic combinatorial problem in which a chess knight must visit every square of an N×N board exactly once. The sequence of moves forms a **Hamiltonian path** on the graph of valid knight moves.
-
-### Algorithm
-
-The solver uses a **greedy strategy** that makes locally optimal decisions at each step without backtracking:
-
-1. At each position, all valid knight moves are enumerated.
-2. Among the candidates, the one with the **fewest onward moves** (lowest degree) is chosen — this is Warnsdorff's rule, which steers the knight away from isolated squares.
-3. When two or more candidates share the same degree, **Roth's tiebreaker** selects the one with the **greatest Euclidean distance from the center** of the board, favoring edges and corners where the knight is most likely to get trapped.
-4. A random factor serves as a third-level tiebreaker, allowing the algorithm to retry with different orderings across up to **50 attempts** until a complete tour is found.
-
-### Complexity
-
-| Dimension | Value |
-|-----------|-------|
-| Time complexity | O(N²) |
-| Space complexity | O(N²) |
-
-The algorithm initializes an N×N board and executes at most N² − 1 steps per attempt. Each step evaluates a fixed set of 8 moves in O(1). With up to K = 50 retries, the worst-case time is O(50 · N²) = O(N²). Memory usage is dominated by the board matrix and the path list, both of size O(N²).
+Implementacao em terminal do classico **Problema do Passeio do Cavalo** utilizando uma estrategia gulosa baseada na **heuristica de Warnsdorff** com o **criterio de desempate de Roth**, com visualizacao animada do tabuleiro em ASCII renderizado em perspectiva 3D ou projecao isometrica.
 
 ---
 
-## Features
+## Sobre o Problema
 
-- Warnsdorff's heuristic with Roth's tiebreaking criterion
-- Animated step-by-step visualization in the terminal
-- Two rendering modes: **3D perspective** and **isometric projection**
-- ANSI color support with a cyberpunk/retro aesthetic
-- Configurable board size, starting position, animation speed, and cell height
-- Execution report with step count, timing, and total degree evaluations
+O Passeio do Cavalo e um problema combinatorio classico no qual um cavalo de xadrez deve visitar todas as casas de um tabuleiro N×N exatamente uma vez. A sequencia de movimentos forma um **caminho Hamiltoniano** no grafo de movimentos validos do cavalo.
+
+### Algoritmo
+
+O solucionador utiliza uma **estrategia gulosa** que toma decisoes localmente otimas a cada passo, sem retroceder:
+
+1. A cada posicao, todos os movimentos validos do cavalo sao enumerados.
+2. Entre os candidatos, e escolhido o que possui o **menor numero de saidas possiveis** (menor grau) — esta e a regra de Warnsdorff, que direciona o cavalo para longe de casas isoladas.
+3. Quando dois ou mais candidatos tem o mesmo grau, o **criterio de desempate de Roth** seleciona o que possui a **maior distancia euclidiana em relacao ao centro** do tabuleiro, priorizando bordas e cantos onde o cavalo tem maior chance de ficar preso.
+4. Um fator aleatorio serve como terceiro nivel de desempate, permitindo que o algoritmo repita com ordenacoes diferentes em ate **50 tentativas** ate encontrar um passeio completo.
+
+### Complexidade
+
+| Dimensao | Valor |
+|----------|-------|
+| Complexidade de tempo | O(N²) |
+| Complexidade de espaco | O(N²) |
+
+O algoritmo inicializa uma matriz N×N e executa no maximo N² − 1 passos por tentativa. Cada passo avalia um conjunto fixo de 8 movimentos em O(1). Com ate K = 50 tentativas, o pior caso e O(50 · N²) = O(N²). O uso de memoria e dominado pela matriz do tabuleiro e pela lista do caminho, ambos de tamanho O(N²).
 
 ---
 
-## Requirements
+## Funcionalidades
 
-- Python 3.7 or higher
-- A terminal with ANSI color support (Linux, macOS, Windows Terminal)
-
-No external dependencies are required.
+- Heuristica de Warnsdorff com criterio de desempate de Roth
+- Visualizacao animada passo a passo no terminal
+- Dois modos de renderizacao: **perspectiva 3D** e **projecao isometrica**
+- Suporte a cores ANSI com estetica cyberpunk/retro
+- Tamanho do tabuleiro, posicao inicial, velocidade de animacao e altura das celulas configuravéis
+- Relatorio de execucao com numero de passos, tempo e total de avaliacoes de grau
 
 ---
 
-## Installation
+## Requisitos
+
+- Python 3.7 ou superior
+- Terminal com suporte a cores ANSI (Linux, macOS, Windows Terminal)
+
+Nenhuma dependencia externa e necessaria.
+
+---
+
+## Instalacao
 
 ```bash
 git clone https://github.com/indhcwmrxl/knights-tour.git
@@ -57,90 +57,90 @@ cd knights-tour
 
 ---
 
-## Usage
+## Como Usar
 
-### Basic
+### Basico
 
 ```bash
 python3 knights_tour.py
 ```
 
-Runs the default configuration: 8×8 board, starting at A1, 3D perspective view.
+Executa com a configuracao padrao: tabuleiro 8×8, posicao inicial A1, modo de visualizacao 3D.
 
-### Full syntax
+### Sintaxe completa
 
 ```bash
-python3 knights_tour.py [--size N] [--start POS] [--delay SEC] [--view MODE] [--tall | --compact]
+python3 knights_tour.py [--size N] [--start POS] [--delay SEG] [--view MODO] [--tall | --compact]
 ```
 
-### Options
+### Opcoes
 
-| Option | Short | Default | Description |
-|--------|-------|---------|-------------|
-| `--size N` | `-s` | `8` | Board size (N×N). Minimum recommended: 5 |
-| `--start POS` | `-p` | `a1` | Starting position in chess notation (e.g., `d4`, `b7`) |
-| `--delay SEC` | `-d` | `0.06` | Delay between animation frames in seconds |
-| `--view MODE` | `-v` | `3d` | Rendering mode: `3d` or `iso` |
-| `--tall` | | | Force 3-line cell height |
-| `--compact` | | | Force 2-line cell height |
+| Opcao | Abreviacao | Padrao | Descricao |
+|-------|------------|--------|-----------|
+| `--size N` | `-s` | `8` | Tamanho do tabuleiro (N×N). Minimo recomendado: 5 |
+| `--start POS` | `-p` | `a1` | Posicao inicial em notacao de xadrez (ex: `d4`, `b7`) |
+| `--delay SEG` | `-d` | `0.06` | Intervalo entre quadros da animacao em segundos |
+| `--view MODO` | `-v` | `3d` | Modo de renderizacao: `3d` ou `iso` |
+| `--tall` | | | Forca altura de celula com 3 linhas |
+| `--compact` | | | Forca altura de celula com 2 linhas |
 
-### Examples
+### Exemplos
 
 ```bash
-# 8x8 board starting at D4 with isometric view
+# Tabuleiro 8x8 iniciando em D4 com visao isometrica
 python3 knights_tour.py --start d4 --view iso
 
-# 5x5 board starting at A3, faster animation
+# Tabuleiro 5x5 iniciando em A3, animacao mais rapida
 python3 knights_tour.py --size 5 --start a3 --delay 0.03
 
-# 10x10 board with compact cells
+# Tabuleiro 10x10 com celulas compactas
 python3 knights_tour.py --size 10 --compact
 
-# Positional arguments (legacy syntax)
+# Argumentos posicionais (sintaxe legada)
 python3 knights_tour.py 8 0.05 d4 3d
 ```
 
 ---
 
-## Output
+## Saida do Programa
 
-During execution, the terminal displays:
+Durante a execucao, o terminal exibe:
 
-- A **HUD panel** with the current step, board position, and a progress bar
-- The **animated board** updated at each knight move
-- A **final execution report** including:
-  - Tour status (complete or partial)
-  - Board dimensions
-  - Start and end positions
-  - Number of squares visited
-  - Computation time in milliseconds
-  - Total degree evaluations (computational effort metric)
-
----
-
-## Notes on the 5×5 Board
-
-The 5×5 board is a known edge case. Certain starting positions do not yield a complete Hamiltonian path under any deterministic greedy strategy, including Warnsdorff's. When all 50 retry attempts are exhausted without a complete tour, the program reports a **partial tour** with the number of squares visited.
-
-Starting positions near the center (e.g., C3, D3) tend to produce shorter partial tours, while edge positions (e.g., A3, B1) are more likely to produce complete tours.
+- Um **painel HUD** com o passo atual, posicao no tabuleiro e barra de progresso
+- O **tabuleiro animado** atualizado a cada movimento do cavalo
+- Um **relatorio final de execucao** contendo:
+  - Status do passeio (completo ou parcial)
+  - Dimensoes do tabuleiro
+  - Posicoes de inicio e fim
+  - Numero de casas visitadas
+  - Tempo de calculo em milissegundos
+  - Total de avaliacoes de grau (metrica de esforco computacional)
 
 ---
 
-## Academic Context
+## Observacoes sobre o Tabuleiro 5×5
 
-This implementation was developed for the **Compilers** course at the **Universidade do Estado do Rio Grande do Norte (UERN)**, Campus Natal, as a practical exercise on algorithmic complexity analysis and greedy strategy design.
+O tabuleiro 5×5 e um caso limite conhecido. Certas posicoes iniciais nao produzem um caminho Hamiltoniano completo sob nenhuma estrategia gulosa deterministica, incluindo a de Warnsdorff. Quando todas as 50 tentativas sao esgotadas sem um passeio completo, o programa reporta um **passeio parcial** com o numero de casas visitadas.
+
+Posicoes proximas ao centro (ex: C3, D3) tendem a produzir passeios parciais mais curtos, enquanto posicoes de borda (ex: A3, B1) tem maior probabilidade de gerar passeios completos.
 
 ---
 
-## References
+## Contexto Academico
 
-- FEOFILOFF, Paulo. *O paradigma guloso no projeto de algoritmos*. Available at: https://users.ime.usp.br/~pf/analise_de_algoritmos/aulas/guloso.html
+Esta implementacao foi desenvolvida para a disciplina de **Compiladores** da **Universidade do Estado do Rio Grande do Norte (UERN)**, Campus Natal, como exercicio pratico de analise de complexidade algorítmica e projeto de estrategias gulosas.
+
+---
+
+## Referencias
+
+- FEOFILOFF, Paulo. *O paradigma guloso no projeto de algoritmos*. Disponivel em: https://users.ime.usp.br/~pf/analise_de_algoritmos/aulas/guloso.html
 - POHL, Ira. A method for finding Hamilton paths and Knight's tours. *Communications of the ACM*, v. 10, n. 7, p. 446–449, 1967. DOI: 10.1145/363427.363463
-- ROTH, Arnd. *The Problem of the Knight: A Fast and Simple Algorithm*. Wolfram Library Archive, MathSource, 1992. Available at: https://library.wolfram.com/infocenter/MathSource/909/
-- BIGONHA, Roberto S.; BIGONHA, Mariza A. S. *Algoritmos e Estruturas de Dados II*. Available at: https://homepages.dcc.ufmg.br/~bigonha/Cursos/aedii-slides-p4.pdf
+- ROTH, Arnd. *The Problem of the Knight: A Fast and Simple Algorithm*. Wolfram Library Archive, MathSource, 1992. Disponivel em: https://library.wolfram.com/infocenter/MathSource/909/
+- BIGONHA, Roberto S.; BIGONHA, Mariza A. S. *Algoritmos e Estruturas de Dados II*. Disponivel em: https://homepages.dcc.ufmg.br/~bigonha/Cursos/aedii-slides-p4.pdf
 
 ---
 
-## License
+## Licenca
 
-This project is released under the [MIT License](LICENSE).
+Este projeto esta licenciado sob a [Licenca MIT](LICENSE).
