@@ -1,25 +1,25 @@
-# Passeio do Cavalo — Heuristica de Warnsdorff com Criterio de Desempate de Roth
+# Passeio do Cavalo — Heurística de Warnsdorff com Critério de Desempate de Roth
 
 <p align="center">
   <img src="banner.jpg" alt="Passeio do Cavalo" width="320"/>
 </p>
 
-Implementacao em terminal do classico **Problema do Passeio do Cavalo** utilizando uma estrategia gulosa baseada na **heuristica de Warnsdorff** com o **criterio de desempate de Roth**, com visualizacao animada do tabuleiro em ASCII renderizado em perspectiva 3D ou projecao isometrica.
+Implementação em terminal do clássico **Problema do Passeio do Cavalo** utilizando uma estratégia gulosa baseada na **heurística de Warnsdorff** com o **critério de desempate de Roth**, com visualização animada do tabuleiro em ASCII renderizado em perspectiva 3D ou projeção isométrica.
 
 ---
 
 ## Sobre o Problema
 
-O Passeio do Cavalo e um problema combinatorio classico no qual um cavalo de xadrez deve visitar todas as casas de um tabuleiro N×N exatamente uma vez. A sequencia de movimentos forma um **caminho Hamiltoniano** no grafo de movimentos validos do cavalo.
+O Passeio do Cavalo e um problema combinatorio classico no qual um cavalo de xadrez deve visitar todas as casas de um tabuleiro N×N exatamente uma vez. A sequência de movimentos forma um **caminho Hamiltoniano** no grafo de movimentos válidos do cavalo.
 
 ### Algoritmo
 
-O solucionador utiliza uma **estrategia gulosa** que toma decisoes localmente otimas a cada passo, sem retroceder:
+O solucionador utiliza uma **estratégia gulosa** que toma decisões localmente ótimas a cada passo, sem retroceder:
 
-1. A cada posicao, todos os movimentos validos do cavalo sao enumerados.
-2. Entre os candidatos, e escolhido o que possui o **menor numero de saidas possiveis** (menor grau) — esta e a regra de Warnsdorff, que direciona o cavalo para longe de casas isoladas.
-3. Quando dois ou mais candidatos tem o mesmo grau, o **criterio de desempate de Roth** seleciona o que possui a **maior distancia euclidiana em relacao ao centro** do tabuleiro, priorizando bordas e cantos onde o cavalo tem maior chance de ficar preso.
-4. Um fator aleatorio serve como terceiro nivel de desempate, permitindo que o algoritmo repita com ordenacoes diferentes em ate **50 tentativas** ate encontrar um passeio completo.
+1. A cada posição, todos os movimentos válidos do cavalo sao enumerados.
+2. Entre os candidatos, é escolhido o que possui o **menor número de saídas possíveis** (menor grau) — esta é a regra de Warnsdorff, que direciona o cavalo para longe de casas isoladas.
+3. Quando dois ou mais candidatos tem o mesmo grau, o **critério de desempate de Roth** seleciona o que possui a **maior distância euclidiana em relação ao centro** do tabuleiro, priorizando bordas e cantos onde o cavalo tem maior chance de ficar preso.
+4. Um fator aleatório serve como terceiro nível de desempate, permitindo que o algoritmo repita com ordenações diferentes em ate **50 tentativas** ate encontrar um passeio completo.
 
 ### Complexidade
 
