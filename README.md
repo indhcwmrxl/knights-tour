@@ -121,21 +121,21 @@ Durante a execução, o terminal exibe:
 
 ---
 
-## Observacoes sobre o Tabuleiro 5×5
+## Observações sobre o Tabuleiro 5×5
 
-O tabuleiro 5×5 e um caso limite conhecido. Certas posicoes iniciais nao produzem um caminho Hamiltoniano completo sob nenhuma estrategia gulosa deterministica, incluindo a de Warnsdorff. Quando todas as 50 tentativas sao esgotadas sem um passeio completo, o programa reporta um **passeio parcial** com o numero de casas visitadas.
+O tabuleiro 5×5 e um caso limite conhecido. Certas posições iniciais não produzem um caminho Hamiltoniano completo sob nenhuma estratégia gulosa determinística, incluindo a de Warnsdorff. Quando todas as 50 tentativas são esgotadas sem um passeio completo, o programa reporta um **passeio parcial** com o número de casas visitadas.
 
-Posicoes proximas ao centro (ex: C3, D3) tendem a produzir passeios parciais mais curtos, enquanto posicoes de borda (ex: A3, B1) tem maior probabilidade de gerar passeios completos.
+Posições próximas ao centro (ex: C3, D3) tendem a produzir passeios parciais mais curtos, enquanto posições de borda (ex: A3, B1) tem maior probabilidade de gerar passeios completos.
 
 ---
 
 ## Contexto Academico
 
-Esta implementacao foi desenvolvida para a disciplina de **Compiladores** da **Universidade do Estado do Rio Grande do Norte (UERN)**, Campus Natal, como exercicio pratico de analise de complexidade algorítmica e projeto de estrategias gulosas.
+Esta implementação foi desenvolvida para a disciplina de **Compiladores** da **Universidade do Estado do Rio Grande do Norte (UERN)**, Campus Natal, como exercício prático de análise de complexidade algorítmica e projeto de estratégias gulosas.
 
 ---
 
-## Referencias
+## Referências
 
 - FEOFILOFF, Paulo. *O paradigma guloso no projeto de algoritmos*. Disponivel em: https://users.ime.usp.br/~pf/analise_de_algoritmos/aulas/guloso.html
 - POHL, Ira. A method for finding Hamilton paths and Knight's tours. *Communications of the ACM*, v. 10, n. 7, p. 446–449, 1967. DOI: 10.1145/363427.363463
