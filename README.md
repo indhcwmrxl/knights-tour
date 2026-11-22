@@ -19,7 +19,7 @@ O solucionador utiliza uma **estratégia gulosa** que toma decisões localmente 
 1. A cada posição, todos os movimentos válidos do cavalo sao enumerados.
 2. Entre os candidatos, é escolhido o que possui o **menor número de saídas possíveis** (menor grau) — esta é a regra de Warnsdorff, que direciona o cavalo para longe de casas isoladas.
 3. Quando dois ou mais candidatos tem o mesmo grau, o **critério de desempate de Roth** seleciona o que possui a **maior distância euclidiana em relação ao centro** do tabuleiro, priorizando bordas e cantos onde o cavalo tem maior chance de ficar preso.
-4. Um fator aleatório serve como terceiro nível de desempate, permitindo que o algoritmo repita com ordenações diferentes em ate **50 tentativas** ate encontrar um passeio completo.
+4. Um fator aleatório serve como terceiro nível de desempate, permitindo que o algoritmo repita com ordenações diferentes em até **50 tentativas** até encontrar um passeio completo.
 
 ### Complexidade
 
@@ -28,18 +28,18 @@ O solucionador utiliza uma **estratégia gulosa** que toma decisões localmente 
 | Complexidade de tempo | O(N²) |
 | Complexidade de espaco | O(N²) |
 
-O algoritmo inicializa uma matriz N×N e executa no maximo N² − 1 passos por tentativa. Cada passo avalia um conjunto fixo de 8 movimentos em O(1). Com ate K = 50 tentativas, o pior caso e O(50 · N²) = O(N²). O uso de memoria e dominado pela matriz do tabuleiro e pela lista do caminho, ambos de tamanho O(N²).
+O algoritmo inicializa uma matriz N×N e executa no máximo N² − 1 passos por tentativa. Cada passo avalia um conjunto fixo de 8 movimentos em O(1). Com até K = 50 tentativas, o pior caso e O(50 · N²) = O(N²). O uso de memória e dominado pela matriz do tabuleiro e pela lista do caminho, ambos de tamanho O(N²).
 
 ---
 
 ## Funcionalidades
 
-- Heuristica de Warnsdorff com criterio de desempate de Roth
-- Visualizacao animada passo a passo no terminal
-- Renderizacao em perspectiva 3D no terminal
-- Suporte a cores ANSI com estetica cyberpunk/retro
-- Tamanho do tabuleiro, posicao inicial, velocidade de animacao e altura das celulas configuravéis
-- Relatorio de execucao com numero de passos, tempo e total de avaliacoes de grau
+- Heurística de Warnsdorff com critério de desempate de Roth
+- Visualização animada passo a passo no terminal
+- Renderização em perspectiva 3D no terminal
+- Suporte a cores ANSI com estética cyberpunk/retro
+- Tamanho do tabuleiro, posição inicial, velocidade de animação e altura das células configuravéis
+- Relatório de execução com número de passos, tempo e total de avaliações de grau
 
 ---
 
@@ -48,11 +48,11 @@ O algoritmo inicializa uma matriz N×N e executa no maximo N² − 1 passos por 
 - Python 3.7 ou superior
 - Terminal com suporte a cores ANSI (Linux, macOS, Windows Terminal)
 
-Nenhuma dependencia externa e necessaria.
+Nenhuma dependência externa e necessária.
 
 ---
 
-## Instalacao
+## Instalação
 
 ```bash
 git clone https://github.com/indhcwmrxl/knights-tour.git
@@ -63,13 +63,13 @@ cd knights-tour
 
 ## Como Usar
 
-### Basico
+### Básico
 
 ```bash
 python3 knights_tour.py
 ```
 
-Executa com a configuracao padrao: tabuleiro 8×8, posicao inicial A1, modo de visualizacao 3D.
+Executa com a configuração padrão: tabuleiro 8×8, posicao inicial A1, modo de visualização 3D.
 
 ### Sintaxe completa
 
@@ -77,15 +77,15 @@ Executa com a configuracao padrao: tabuleiro 8×8, posicao inicial A1, modo de v
 python3 knights_tour.py [--size N] [--start POS] [--delay SEG] [--tall | --compact]
 ```
 
-### Opcoes
+### Opções
 
-| Opcao | Abreviacao | Padrao | Descricao |
+| Opção | Abreviação | Padrão | Descrição |
 |-------|------------|--------|-----------|
-| `--size N` | `-s` | `8` | Tamanho do tabuleiro (N×N). Minimo recomendado: 5 |
-| `--start POS` | `-p` | `a1` | Posicao inicial em notacao de xadrez (ex: `d4`, `b7`) |
-| `--delay SEG` | `-d` | `0.06` | Intervalo entre quadros da animacao em segundos |
-| `--tall` | | | Forca altura de celula com 3 linhas |
-| `--compact` | | | Forca altura de celula com 2 linhas |
+| `--size N` | `-s` | `8` | Tamanho do tabuleiro (N×N). Mínimo recomendado: 5 |
+| `--start POS` | `-p` | `a1` | Posição inicial em notação de xadrez (ex: `d4`, `b7`) |
+| `--delay SEG` | `-d` | `0.06` | Intervalo entre quadros da animação em segundos |
+| `--tall` | | | Força altura de célula com 3 linhas |
+| `--compact` | | | Força altura de célula com 2 linhas |
 
 ### Exemplos
 
@@ -107,17 +107,17 @@ python3 knights_tour.py 8 0.05 d4
 
 ## Saida do Programa
 
-Durante a execucao, o terminal exibe:
+Durante a execução, o terminal exibe:
 
-- Um **painel HUD** com o passo atual, posicao no tabuleiro e barra de progresso
+- Um **painel HUD** com o passo atual, posição no tabuleiro e barra de progresso
 - O **tabuleiro animado** atualizado a cada movimento do cavalo
-- Um **relatorio final de execucao** contendo:
+- Um **relatório final de execução** contendo:
   - Status do passeio (completo ou parcial)
-  - Dimensoes do tabuleiro
-  - Posicoes de inicio e fim
-  - Numero de casas visitadas
-  - Tempo de calculo em milissegundos
-  - Total de avaliacoes de grau (metrica de esforco computacional)
+  - Dimensões do tabuleiro
+  - Posições de início e fim
+  - Número de casas visitadas
+  - Tempo de cálculo em milissegundos
+  - Total de avaliações de grau (métrica de esforço computacional)
 
 ---
 
